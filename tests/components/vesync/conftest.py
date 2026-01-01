@@ -294,11 +294,24 @@ async def install_humidifier_device(
     request: pytest.FixtureRequest,
 ) -> None:
     """Create a mock VeSync config entry with the specified humidifier device."""
+    from unittest.mock import patch
 
     # Install the defined humidifier
     manager._dev_list["humidifiers"].append(request.getfixturevalue(request.param))
-    await hass.config_entries.async_setup(config_entry.entry_id)
-    await hass.async_block_till_done()
+
+    # Check if platforms fixture is available
+    try:
+        platforms = request.getfixturevalue("platforms")
+    except Exception:
+        platforms = None
+
+    if platforms is not None:
+        with patch("homeassistant.components.vesync.PLATFORMS", platforms):
+            await hass.config_entries.async_setup(config_entry.entry_id)
+            await hass.async_block_till_done()
+    else:
+        await hass.config_entries.async_setup(config_entry.entry_id)
+        await hass.async_block_till_done()
 
 
 @pytest.fixture(name="fan_config_entry")
