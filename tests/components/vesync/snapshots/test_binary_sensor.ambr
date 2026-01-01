@@ -309,6 +309,34 @@
     'state': 'on',
   })
 # ---
+# name: test_sensor_state[Humidifier 200s][binary_sensor.humidifier_200s_none]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'problem',
+      'friendly_name': 'Humidifier 200s None',
+    }),
+    'context': <ANY>,
+    'entity_id': 'binary_sensor.humidifier_200s_none',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'on',
+  })
+# ---
+# name: test_sensor_state[Humidifier 200s][binary_sensor.humidifier_200s_none_2]
+  StateSnapshot({
+    'attributes': ReadOnlyDict({
+      'device_class': 'problem',
+      'friendly_name': 'Humidifier 200s None',
+    }),
+    'context': <ANY>,
+    'entity_id': 'binary_sensor.humidifier_200s_none_2',
+    'last_changed': <ANY>,
+    'last_reported': <ANY>,
+    'last_updated': <ANY>,
+    'state': 'on',
+  })
+# ---
 # name: test_sensor_state[Humidifier 200s][binary_sensor.humidifier_200s_water_tank_lifted]
   StateSnapshot({
     'attributes': ReadOnlyDict({
@@ -370,7 +398,7 @@
       'disabled_by': None,
       'domain': 'binary_sensor',
       'entity_category': None,
-      'entity_id': 'binary_sensor.humidifier_200s_low_water',
+      'entity_id': 'binary_sensor.humidifier_200s_none',
       'has_entity_name': True,
       'hidden_by': None,
       'icon': None,
@@ -383,7 +411,7 @@
       }),
       'original_device_class': <BinarySensorDeviceClass.PROBLEM: 'problem'>,
       'original_icon': None,
-      'original_name': 'Low water',
+      'original_name': None,
       'platform': 'vesync',
       'previous_unique_id': None,
       'suggested_object_id': None,
@@ -404,7 +432,7 @@
       'disabled_by': None,
       'domain': 'binary_sensor',
       'entity_category': None,
-      'entity_id': 'binary_sensor.humidifier_200s_water_tank_lifted',
+      'entity_id': 'binary_sensor.humidifier_200s_none_2',
       'has_entity_name': True,
       'hidden_by': None,
       'icon': None,
@@ -417,7 +445,7 @@
       }),
       'original_device_class': <BinarySensorDeviceClass.PROBLEM: 'problem'>,
       'original_icon': None,
-      'original_name': 'Water tank lifted',
+      'original_name': None,
       'platform': 'vesync',
       'previous_unique_id': None,
       'suggested_object_id': None,

@@ -214,6 +214,7 @@ def humidifier_fixture():
             connection_status="online",
             humidity=50,
             mist_level=6,
+            mist_virtual_level=6,
             mode=None,
             nightlight_status="dim",
             nightlight_brightness=50,
@@ -243,6 +244,7 @@ def humidifier_300s_fixture():
         device_status="on",
         mist_modes=["auto", "manual"],
         mist_levels=[1, 2, 3, 4, 5, 6],
+        warm_levels=[1, 2, 3],
         sub_device_no=0,
         target_minmax=(30, 80),
         state=Mock(
@@ -250,11 +252,13 @@ def humidifier_300s_fixture():
             connection_status="online",
             humidity=50,
             mist_level=6,
+            mist_virtual_level=6,
             mode=None,
             nightlight_status="dim",
             nightlight_brightness=50,
             water_lacks=False,
             water_tank_lifted=False,
+            warm_mist_level=2,
         ),
         config_module="configModule",
         current_firm_version="1.0.0",
@@ -290,11 +294,22 @@ async def install_humidifier_device(
     request: pytest.FixtureRequest,
 ) -> None:
     """Create a mock VeSync config entry with the specified humidifier device."""
-
     # Install the defined humidifier
     manager._dev_list["humidifiers"].append(request.getfixturevalue(request.param))
-    await hass.config_entries.async_setup(config_entry.entry_id)
-    await hass.async_block_till_done()
+
+    # Check if platforms fixture is available
+    try:
+        platforms = request.getfixturevalue("platforms")
+    except pytest.FixtureLookupError:
+        platforms = None
+
+    if platforms is not None:
+        with patch("homeassistant.components.vesync.PLATFORMS", platforms):
+            await hass.config_entries.async_setup(config_entry.entry_id)
+            await hass.async_block_till_done()
+    else:
+        await hass.config_entries.async_setup(config_entry.entry_id)
+        await hass.async_block_till_done()
 
 
 @pytest.fixture(name="fan_config_entry")

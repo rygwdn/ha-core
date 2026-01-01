@@ -49,7 +49,20 @@ NUMBER_DESCRIPTIONS: list[VeSyncNumberEntityDescription] = [
         exists_fn=is_humidifier,
         set_value_fn=lambda device, value: device.set_mist_level(value),
         value_fn=lambda device: device.state.mist_virtual_level,
-    )
+    ),
+    VeSyncNumberEntityDescription(
+        key="warm_level",
+        translation_key="warm_level",
+        native_min_value_fn=lambda device: min(device.warm_levels),
+        native_max_value_fn=lambda device: max(device.warm_levels),
+        native_step=1,
+        mode=NumberMode.SLIDER,
+        exists_fn=lambda device: (
+            is_humidifier(device) and hasattr(device, "warm_levels")
+        ),
+        set_value_fn=lambda device, value: device.set_warm_level(value),
+        value_fn=lambda device: device.state.warm_mist_level,
+    ),
 ]
 
 
